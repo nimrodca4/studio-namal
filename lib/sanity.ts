@@ -1,15 +1,8 @@
-import { createClient } from '@sanity/client';
 import { gowns, type Gown, type SanityImage } from './gowns';
+import { getSanityImageUrl } from './sanityImage';
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '6sgzy01k';
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
-
-export const sanityClient = createClient({
-  projectId,
-  dataset,
-  apiVersion: '2024-01-01',
-  useCdn: false,
-});
+export {dataset, projectId, sanityClient} from './sanityClient';
+import {sanityClient} from './sanityClient';
 
 export type NavItem = {
   label: string;
@@ -210,6 +203,8 @@ function normalizeDress(dress: SanityDress): Gown {
     collection: dress.collection,
     sketch: dress.sketch,
     size: dress.size,
+    coverImage: dress.coverImage,
+    galleryImages: dress.galleryImages,
   };
 }
 
@@ -263,6 +258,12 @@ export async function getContact(): Promise<ContactContent> {
 export async function getDresses(): Promise<DressCollection> {
   const items = await fetchFromSanity<SanityDress[]>(`*[_type == "dress"] | order(_createdAt asc) { slug, name, description, year, collection, sketch, size, coverImage, galleryImages }`, gowns as SanityDress[]);
 
+  console.log('[Sanity dresses]', items.map((dress) => ({
+    name: dress.name,
+    coverImage: getSanityImageUrl(dress.coverImage || dress.galleryImages?.[0]),
+    galleryImages: dress.galleryImages?.map((image) => getSanityImageUrl(image)) || [],
+  })));
+
   return {
     ...fallbackDressCollection,
     items: items.map(normalizeDress),
@@ -277,6 +278,12 @@ export async function getDressBySlug(slug: string): Promise<Gown | null> {
   );
 
   if (!dress) return null;
+
+  console.log('[Sanity dress]', {
+    slug,
+    coverImage: getSanityImageUrl(dress.coverImage || dress.galleryImages?.[0]),
+    galleryImages: dress.galleryImages?.map((image) => getSanityImageUrl(image)) || [],
+  });
 
   return normalizeDress(dress);
 }
