@@ -52,6 +52,7 @@ export type HomepageContent = {
   ctaTitle: string;
   ctaButtonLabel: string;
   heroImage?: SanityImage;
+  storyImage?: SanityImage;
 };
 
 export type AboutContent = {
@@ -244,7 +245,7 @@ export async function getNavigation(): Promise<NavItem[]> {
 }
 
 export async function getHomepage(): Promise<HomepageContent> {
-  return fetchRequiredFromSanity<HomepageContent>(`*[_type == "homepage" && _id == "homepage"][0]{ heroEyebrow, heroTitle, heroSubtitle, heroCtaLabel, heroCtaHref, heroImage, manifestoEyebrow, manifestoHeadline, manifestoBody, featuredEyebrow, featuredTitle, featuredLinkLabel, featuredGownSlugs, studioEyebrow, studioHeading, studioBody, studioButtonLabel, ctaEyebrow, ctaTitle, ctaButtonLabel }`);
+  return fetchRequiredFromSanity<HomepageContent>(`*[_type == "homepage" && _id == "homepage"][0]{ heroEyebrow, heroTitle, heroSubtitle, heroCtaLabel, heroCtaHref, heroImage, storyImage, manifestoEyebrow, manifestoHeadline, manifestoBody, featuredEyebrow, featuredTitle, featuredLinkLabel, featuredGownSlugs, studioEyebrow, studioHeading, studioBody, studioButtonLabel, ctaEyebrow, ctaTitle, ctaButtonLabel }`);
 }
 
 export async function getAbout(): Promise<AboutContent> {
