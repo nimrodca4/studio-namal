@@ -256,7 +256,7 @@ export async function getContact(): Promise<ContactContent> {
 }
 
 export async function getDresses(): Promise<DressCollection> {
-  const items = await fetchFromSanity<SanityDress[]>(`*[_type == "dress"] | order(_createdAt asc) { slug, name, description, year, collection, sketch, size, coverImage, galleryImages }`, gowns as SanityDress[]);
+  const items = await fetchFromSanity<SanityDress[]>(`*[_type == "dress"] | order(_createdAt asc) { slug, name, description, year, collection, sketch, size, coverImage{..., asset}, galleryImages[]{..., asset} }`, gowns as SanityDress[]);
 
   console.log('[Sanity dresses]', items.map((dress) => ({
     name: dress.name,
@@ -272,7 +272,7 @@ export async function getDresses(): Promise<DressCollection> {
 
 export async function getDressBySlug(slug: string): Promise<Gown | null> {
   const dress = await fetchFromSanity<SanityDress | null>(
-    `*[_type == "dress" && slug.current == $slug][0]{ slug, name, description, year, collection, sketch, size, coverImage, galleryImages }`,
+    `*[_type == "dress" && slug.current == $slug][0]{ slug, name, description, year, collection, sketch, size, coverImage{..., asset}, galleryImages[]{..., asset} }`,
     null,
     { slug }
   );

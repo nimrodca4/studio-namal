@@ -15,7 +15,11 @@ export default function GownModal({
   gown: Gown | null;
   onClose: () => void;
 }) {
-  const imageUrl = getSanityImageUrl(gown?.coverImage || gown?.galleryImages?.[0]);
+  const imageUrls = gown
+    ? [gown.coverImage, ...(gown.galleryImages || [])]
+        .map((image) => getSanityImageUrl(image))
+        .filter((url): url is string => Boolean(url))
+    : [];
 
   useEffect(() => {
     if (!gown) return;
@@ -66,8 +70,17 @@ export default function GownModal({
               <X size={16} strokeWidth={1.25} />
             </button>
 
-            <div className="relative aspect-[3/4] bg-ink md:aspect-auto">
-              {imageUrl && <Image src={imageUrl} alt={gown.name} fill className="object-cover" />}
+            <div className="relative max-h-[80vh] overflow-y-auto overscroll-contain bg-ink touch-pan-y md:max-h-[70vh]">
+              {imageUrls.map((imageUrl, index) => (
+                <div key={`${imageUrl}-${index}`} className="relative aspect-[3/4] w-full shrink-0">
+                  <Image
+                    src={imageUrl}
+                    alt={`${gown.name} - ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
 
             <div className="flex flex-col justify-center p-10 md:p-16">
