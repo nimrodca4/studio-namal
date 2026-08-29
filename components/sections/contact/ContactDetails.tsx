@@ -1,11 +1,10 @@
-import { Instagram, MessageCircle, Mail } from "lucide-react";
+import { MessageCircle, Mail } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { ButtonPrimary } from "@/components/ui/Button";
 import type { ContactContent } from "@/lib/sanity";
 
 const icons = {
-  instagram: Instagram,
   whatsapp: MessageCircle,
   email: Mail,
 };
@@ -34,7 +33,7 @@ export default function ContactDetails({ content }: { content?: ContactContent }
 
   const channels = contact.channels.map((channel, index) => ({
     ...channel,
-    icon: index === 0 ? icons.instagram : index === 1 ? icons.whatsapp : icons.email,
+    icon: index === 0 ? icons.email : index === 1 ? icons.whatsapp : icons.email,
   }));
 
   return (
