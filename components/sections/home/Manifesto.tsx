@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { motion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import type { HomepageContent } from "@/lib/sanity";
@@ -44,7 +45,22 @@ export default function Manifesto({ content }: { content?: HomepageContent }) {
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mt-10 max-w-xl text-sm leading-relaxed text-muted">
-            {homepage.manifestoBody}
+            {homepage.manifestoBody.split("בדיוק את").map((part, index) => (
+              <Fragment key={`${part}-${index}`}>
+                {index > 0 && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 8, scale: 0.92 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="mx-1 inline-block font-medium text-wine"
+                  >
+                    בדיוק את
+                  </motion.span>
+                )}
+                {part}
+              </Fragment>
+            ))}
           </p>
         </Reveal>
       </div>
