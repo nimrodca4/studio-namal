@@ -37,6 +37,18 @@ export default function ContactForm({ content }: { content?: ContactContent }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const subject = `פנייה חדשה מ-${formData.get("name") || "לקוחה"}`;
+    const body = [
+      `שם מלא: ${formData.get("name") || ""}`,
+      `אימייל: ${formData.get("email") || ""}`,
+      `תאריך החתונה: ${formData.get("date") || "לא צוין"}`,
+      "",
+      "הודעה:",
+      `${formData.get("message") || ""}`,
+    ].join("\n");
+
+    window.location.href = `mailto:nimrodca4@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
   };
 
