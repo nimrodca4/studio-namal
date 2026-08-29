@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowUpLeft } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import GownSketch from "@/components/ui/GownSketch";
 import Image from "next/image";
 import { getSanityImageUrl } from "@/lib/sanityImage";
 import type { DressCollection, HomepageContent } from "@/lib/sanity";
@@ -68,10 +67,8 @@ export default function FeaturedGowns({
             <Reveal key={gown.slug} delay={i * 0.1}>
               <Link href="/our-gowns" className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-cream">
-                  {getSanityImageUrl(gown.coverImage) ? (
-                    <Image src={getSanityImageUrl(gown.coverImage) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-105" />
-                  ) : (
-                    <GownSketch variant={gown.sketch} className="absolute inset-0 h-full w-full p-10 text-ink/70 transition-transform duration-[1200ms] ease-editorial group-hover:scale-105" />
+                  {getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) && (
+                    <Image src={getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-105" />
                   )}
                 </div>
                 <div className="mt-5 flex items-baseline justify-between">

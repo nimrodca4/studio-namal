@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import GownSketch from "@/components/ui/GownSketch";
 import GownModal from "@/components/sections/gowns/GownModal";
 import Reveal from "@/components/ui/Reveal";
 import { gowns, Gown } from "@/lib/gowns";
@@ -35,10 +34,8 @@ export default function GownGallery({ dresses }: { dresses?: DressCollection }) 
               className="group relative block w-full overflow-hidden bg-ink text-start"
             >
               <div className={`relative w-full ${aspect[gown.size]}`}>
-                {getSanityImageUrl(gown.coverImage) ? (
-                  <Image src={getSanityImageUrl(gown.coverImage) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.06]" />
-                ) : (
-                  <GownSketch variant={gown.sketch} className="absolute inset-0 h-full w-full p-12 text-cream/40 transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.06]" />
+                {getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) && (
+                  <Image src={getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.06]" />
                 )}
                 <motion.div className="absolute inset-0 bg-ink/0 transition-colors duration-700 ease-editorial group-hover:bg-ink/30" />
 

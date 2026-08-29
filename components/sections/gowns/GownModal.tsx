@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import GownSketch from "@/components/ui/GownSketch";
 import { Gown } from "@/lib/gowns";
 import Image from "next/image";
 import { getSanityImageUrl } from "@/lib/sanityImage";
@@ -16,7 +15,7 @@ export default function GownModal({
   gown: Gown | null;
   onClose: () => void;
 }) {
-  const imageUrl = getSanityImageUrl(gown?.galleryImages?.[0] || gown?.coverImage);
+  const imageUrl = getSanityImageUrl(gown?.coverImage || gown?.galleryImages?.[0]);
 
   useEffect(() => {
     if (!gown) return;
@@ -61,11 +60,7 @@ export default function GownModal({
             </button>
 
             <div className="relative aspect-[3/4] bg-ink md:aspect-auto">
-              {imageUrl ? (
-                <Image src={imageUrl} alt={gown.name} fill className="object-cover" />
-              ) : (
-                <GownSketch variant={gown.sketch} className="absolute inset-0 h-full w-full p-14 text-cream/40" />
-              )}
+              {imageUrl && <Image src={imageUrl} alt={gown.name} fill className="object-cover" />}
             </div>
 
             <div className="flex flex-col justify-center p-10 md:p-16">
