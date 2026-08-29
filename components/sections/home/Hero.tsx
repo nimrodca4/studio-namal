@@ -100,7 +100,7 @@ export default function Hero({ content }: { content: HomepageContent }) {
         >
           <ButtonPrimary
             href={homepage.heroCtaHref || "/our-gowns"}
-            className="border-cream/80 text-cream hover:bg-cream hover:text-ink"
+            className="border-cream/80 bg-cream px-10 py-5 text-sm text-ink hover:bg-transparent hover:text-cream"
           >
             {homepage.heroCtaLabel}
           </ButtonPrimary>
