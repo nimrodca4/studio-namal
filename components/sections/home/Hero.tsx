@@ -7,10 +7,13 @@ import { ChevronDown } from "lucide-react";
 import { ButtonPrimary } from "@/components/ui/Button";
 import { editorialEase } from "@/animations/variants";
 import type { HomepageContent } from "@/lib/sanity";
+import { getSanityImageUrl } from "@/lib/sanityImage";
+import type { SanityImage } from "@/lib/gowns";
 
-export default function Hero({ content }: { content: HomepageContent }) {
+export default function Hero({ content, logo }: { content: HomepageContent; logo?: SanityImage }) {
   const sectionRef = useRef<HTMLElement>(null);
   const homepage = content;
+  const heroImageUrl = getSanityImageUrl(homepage.heroImage);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -23,6 +26,15 @@ export default function Hero({ content }: { content: HomepageContent }) {
       ref={sectionRef}
       className="relative flex h-[100svh] min-h-[720px] w-full items-center justify-center overflow-hidden bg-[#000000]"
     >
+      {heroImageUrl && (
+        <Image
+          src={heroImageUrl}
+          alt=""
+          fill
+          priority
+          className="object-cover"
+        />
+      )}
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -71,7 +83,7 @@ export default function Hero({ content }: { content: HomepageContent }) {
                 className="group block w-full"
               >
                 <Image
-                  src="/Logo-namal.png"
+                  src={getSanityImageUrl(logo, 1400) || "/Logo-namal.png"}
                   alt="סטודיו נמל — יחד, תמיד"
                   width={1267}
                   height={1267}

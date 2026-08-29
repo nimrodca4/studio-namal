@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useScrolled } from "@/hooks/useScrolled";
+import { getSanityImageUrl } from "@/lib/sanityImage";
+import type { SanityImage } from "@/lib/gowns";
 
 const defaultLinks = [
   { href: "/", label: "בית" },
@@ -18,8 +20,10 @@ const defaultLinks = [
 
 export default function Navbar({
   links = defaultLinks,
+  logoShort,
 }: {
   links?: { href: string; label: string }[];
+  logoShort?: SanityImage;
 }) {
   const pathname = usePathname();
   const scrolled = useScrolled(60);
@@ -53,7 +57,7 @@ export default function Navbar({
 
         <Link href="/" aria-label="סטודיו נמל — לעמוד הבית" className="shrink-0">
           <Image
-            src="/Logo-namal_short.png"
+            src={getSanityImageUrl(logoShort, 400) || "/Logo-namal_short.png"}
             alt="סטודיו נמל"
             width={226}
             height={152}

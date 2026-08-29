@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import GownSketch from '@/components/ui/GownSketch';
 import { getDressBySlug, getDresses } from '@/lib/sanity';
+import { getSanityImageUrl } from '@/lib/sanityImage';
 
 export async function generateStaticParams() {
   const archive = await getDresses();
@@ -46,10 +48,19 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
 
       <article className="grid gap-8 overflow-hidden bg-cream md:grid-cols-2">
         <div className="relative aspect-[3/4] bg-ink md:aspect-auto">
-          <GownSketch
-            variant={gown.sketch}
-            className="absolute inset-0 h-full w-full p-16 text-cream/40"
-          />
+          {getSanityImageUrl(gown.galleryImages?.[0] || gown.coverImage) ? (
+            <Image
+              src={getSanityImageUrl(gown.galleryImages?.[0] || gown.coverImage) as string}
+              alt={gown.name}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <GownSketch
+              variant={gown.sketch}
+              className="absolute inset-0 h-full w-full p-16 text-cream/40"
+            />
+          )}
         </div>
 
         <div className="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16">

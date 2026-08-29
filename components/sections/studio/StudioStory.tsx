@@ -3,6 +3,8 @@ import { imageReveal } from "@/animations/variants";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import GownSketch from "@/components/ui/GownSketch";
 import type { AboutContent } from "@/lib/sanity";
+import Image from "next/image";
+import { getSanityImageUrl } from "@/lib/sanityImage";
 
 export default function StudioStory({ content }: { content?: AboutContent }) {
   const about = content ?? {
@@ -19,15 +21,17 @@ export default function StudioStory({ content }: { content?: AboutContent }) {
     values: [],
     timelineSteps: [],
   };
+  const aboutImageUrl = getSanityImageUrl(about.images?.[0]);
   return (
     <section className="bg-cream py-28 md:py-36">
       <div className="container-studio grid gap-16 md:grid-cols-2 md:gap-24">
         <Reveal variants={imageReveal} className="md:sticky md:top-32 md:self-start">
           <div className="relative aspect-[3/4] w-full overflow-hidden bg-ink">
-            <GownSketch
-              variant="ines"
-              className="absolute inset-0 h-full w-full p-14 text-cream/40"
-            />
+            {aboutImageUrl ? (
+              <Image src={aboutImageUrl} alt={about.title} fill className="object-cover" />
+            ) : (
+              <GownSketch variant="ines" className="absolute inset-0 h-full w-full p-14 text-cream/40" />
+            )}
           </div>
         </Reveal>
 

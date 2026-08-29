@@ -8,6 +8,8 @@ import GownModal from "@/components/sections/gowns/GownModal";
 import Reveal from "@/components/ui/Reveal";
 import { gowns, Gown } from "@/lib/gowns";
 import type { DressCollection } from "@/lib/sanity";
+import Image from "next/image";
+import { getSanityImageUrl } from "@/lib/sanityImage";
 
 const aspect: Record<Gown["size"], string> = {
   tall: "aspect-[3/4.4]",
@@ -33,10 +35,11 @@ export default function GownGallery({ dresses }: { dresses?: DressCollection }) 
               className="group relative block w-full overflow-hidden bg-ink text-start"
             >
               <div className={`relative w-full ${aspect[gown.size]}`}>
-                <GownSketch
-                  variant={gown.sketch}
-                  className="absolute inset-0 h-full w-full p-12 text-cream/40 transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.06]"
-                />
+                {getSanityImageUrl(gown.coverImage) ? (
+                  <Image src={getSanityImageUrl(gown.coverImage) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.06]" />
+                ) : (
+                  <GownSketch variant={gown.sketch} className="absolute inset-0 h-full w-full p-12 text-cream/40 transition-transform duration-[1200ms] ease-editorial group-hover:scale-[1.06]" />
+                )}
                 <motion.div className="absolute inset-0 bg-ink/0 transition-colors duration-700 ease-editorial group-hover:bg-ink/30" />
 
                 <div className="absolute inset-x-6 bottom-6 flex translate-y-2 items-end justify-between opacity-0 transition-all duration-700 ease-editorial group-hover:translate-y-0 group-hover:opacity-100">

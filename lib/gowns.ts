@@ -1,3 +1,10 @@
+export type SanityImage = {
+  asset?: {
+    _ref?: string;
+    _id?: string;
+  };
+};
+
 export type Gown = {
   slug: string;
   name: string;
@@ -6,6 +13,8 @@ export type Gown = {
   collection: string;
   sketch: "aria" | "noor" | "celeste" | "ines" | "marlowe" | "yara";
   size: "tall" | "wide" | "square";
+  coverImage?: SanityImage;
+  galleryImages?: SanityImage[];
 };
 
 export const gowns: Gown[] = [

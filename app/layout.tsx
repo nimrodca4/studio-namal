@@ -55,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const nav = await getNavigation();
+  const [nav, site] = await Promise.all([getNavigation(), getSiteSettings()]);
 
   return (
     <html
@@ -64,7 +64,7 @@ export default async function RootLayout({
       className={`${frankRuhl.variable} ${assistant.variable}`}
     >
       <body>
-        <Navbar links={nav} />
+        <Navbar links={nav} logoShort={site.logoShort} />
         {children}
         <Footer />
       </body>

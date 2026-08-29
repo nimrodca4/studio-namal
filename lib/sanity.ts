@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client';
-import { gowns, type Gown } from './gowns';
+import { gowns, type Gown, type SanityImage } from './gowns';
 
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '6sgzy01k';
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
@@ -29,6 +29,8 @@ export type SiteSettings = {
   instagramUrl: string;
   whatsappNumber: string;
   whatsappUrl: string;
+  logo?: SanityImage;
+  logoShort?: SanityImage;
 };
 
 export type RichTextBlock = {
@@ -56,6 +58,7 @@ export type HomepageContent = {
   ctaEyebrow: string;
   ctaTitle: string;
   ctaButtonLabel: string;
+  heroImage?: SanityImage;
 };
 
 export type AboutContent = {
@@ -67,6 +70,7 @@ export type AboutContent = {
   valuesEyebrow: string;
   values: { title: string; text: string }[];
   timelineSteps: { index: string; title: string; text: string }[];
+  images?: SanityImage[];
 };
 
 export type ContactContent = {
@@ -237,7 +241,7 @@ async function fetchRequiredFromSanity<T>(query: string, params: Record<string, 
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  return fetchFromSanity<SiteSettings>(`*[_type == "siteSettings"][0]{ siteName, tagline, siteUrl, description, keywords, footerTitle, footerBlurb, location, email, instagramUrl, whatsappNumber, whatsappUrl }`, fallbackSiteSettings);
+  return fetchFromSanity<SiteSettings>(`*[_type == "siteSettings"][0]{ siteName, tagline, siteUrl, description, keywords, footerTitle, footerBlurb, location, email, instagramUrl, whatsappNumber, whatsappUrl, logo, logoShort }`, fallbackSiteSettings);
 }
 
 export async function getNavigation(): Promise<NavItem[]> {
@@ -245,11 +249,11 @@ export async function getNavigation(): Promise<NavItem[]> {
 }
 
 export async function getHomepage(): Promise<HomepageContent> {
-  return fetchRequiredFromSanity<HomepageContent>(`*[_type == "homepage" && _id == "homepage"][0]{ heroEyebrow, heroTitle, heroSubtitle, heroCtaLabel, heroCtaHref, manifestoEyebrow, manifestoHeadline, manifestoBody, featuredEyebrow, featuredTitle, featuredLinkLabel, featuredGownSlugs, studioEyebrow, studioHeading, studioBody, studioButtonLabel, ctaEyebrow, ctaTitle, ctaButtonLabel }`);
+  return fetchRequiredFromSanity<HomepageContent>(`*[_type == "homepage" && _id == "homepage"][0]{ heroEyebrow, heroTitle, heroSubtitle, heroCtaLabel, heroCtaHref, heroImage, manifestoEyebrow, manifestoHeadline, manifestoBody, featuredEyebrow, featuredTitle, featuredLinkLabel, featuredGownSlugs, studioEyebrow, studioHeading, studioBody, studioButtonLabel, ctaEyebrow, ctaTitle, ctaButtonLabel }`);
 }
 
 export async function getAbout(): Promise<AboutContent> {
-  return fetchFromSanity<AboutContent>(`*[_type == "about"][0]{ eyebrow, title, intro, body, stats, valuesEyebrow, values, timelineSteps }`, fallbackAbout);
+  return fetchFromSanity<AboutContent>(`*[_type == "about"][0]{ eyebrow, title, intro, body, images, stats, valuesEyebrow, values, timelineSteps }`, fallbackAbout);
 }
 
 export async function getContact(): Promise<ContactContent> {
@@ -257,7 +261,7 @@ export async function getContact(): Promise<ContactContent> {
 }
 
 export async function getDresses(): Promise<DressCollection> {
-  const items = await fetchFromSanity<SanityDress[]>(`*[_type == "dress"] | order(_createdAt asc) { slug, name, description, year, collection, sketch, size }`, gowns as SanityDress[]);
+  const items = await fetchFromSanity<SanityDress[]>(`*[_type == "dress"] | order(_createdAt asc) { slug, name, description, year, collection, sketch, size, coverImage, galleryImages }`, gowns as SanityDress[]);
 
   return {
     ...fallbackDressCollection,
@@ -267,7 +271,7 @@ export async function getDresses(): Promise<DressCollection> {
 
 export async function getDressBySlug(slug: string): Promise<Gown | null> {
   const dress = await fetchFromSanity<SanityDress | null>(
-    `*[_type == "dress" && slug.current == $slug][0]{ slug, name, description, year, collection, sketch, size }`,
+    `*[_type == "dress" && slug.current == $slug][0]{ slug, name, description, year, collection, sketch, size, coverImage, galleryImages }`,
     null,
     { slug }
   );
