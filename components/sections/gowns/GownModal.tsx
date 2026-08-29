@@ -20,11 +20,18 @@ export default function GownModal({
   useEffect(() => {
     if (!gown) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const html = document.documentElement;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = html.style.overflow;
+
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousBodyOverflow;
+      html.style.overflow = previousHtmlOverflow;
     };
   }, [gown, onClose]);
 
