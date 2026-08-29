@@ -5,6 +5,16 @@ import StudioPreview from "@/components/sections/home/StudioPreview";
 import CtaBand from "@/components/sections/home/CtaBand";
 import { getDresses, getHomepage } from "@/lib/sanity";
 
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  const homepage = await getHomepage();
+
+  return {
+    title: homepage.heroTitle,
+  };
+}
+
 export default async function HomePage() {
   const [homepage, dresses] = await Promise.all([getHomepage(), getDresses()]);
 

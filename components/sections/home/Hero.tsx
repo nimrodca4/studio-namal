@@ -1,36 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { ButtonPrimary } from "@/components/ui/Button";
 import { editorialEase } from "@/animations/variants";
 import type { HomepageContent } from "@/lib/sanity";
 
-export default function Hero({ content }: { content?: HomepageContent }) {
+export default function Hero({ content }: { content: HomepageContent }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const homepage = content ?? {
-    heroEyebrow: "סטודיו נמל",
-    heroTitle: "סטודיו נמל",
-    heroSubtitle: "שמלות כלה בעבודת קוטור, מעוצבות ומוגמרות בעבודת יד באטלייה שלנו בתל אביב — עבור נשים שלובשות אותן פעם אחת, וזוכרות אותן לתמיד.",
-    heroCtaLabel: "להכיר את השמלות",
-    heroCtaHref: "/our-gowns",
-    manifestoEyebrow: "התפיסה שלנו",
-    manifestoHeadline: "אנחנו מאמינות ששמלת כלה אינה צריכה להתחרות על תשומת הלב. היא פשוט צריכה להישאר — בחדר, בתצלומים, בזיכרון — הרבה אחרי שהערב תם.",
-    manifestoBody: "כל שמלה של סטודיו נמל מתחילה בשיחה ומסתיימת כמורשת שעוברת מדור לדור. אנחנו עובדות במספרים קטנים, בתיאום מראש, כדי שכל שמלה תקבל את השעות שהיא מבקשת.",
-    featuredEyebrow: "מבחר עבודות",
-    featuredTitle: "השמלות",
-    featuredLinkLabel: "לצפייה בקולקציה המלאה",
-    featuredGownSlugs: ["aria", "celeste", "marlowe"],
-    studioEyebrow: "הסטודיו",
-    studioHeading: "אטלייה של שלושים שמלות בשנה.",
-    studioBody: "אין שתי כלות שיוצאות מהאטלייה שלנו נראות אותו הדבר. סטודיו נמל נוסד מתוך אמונה שקוטור הוא מלאכה של ריסון, ומגביל את עצמו במכוון — פחות שמלות, יותר שעות, תשומת לב קרובה יותר.",
-    studioButtonLabel: "לקריאת הסיפור שלנו",
-    ctaEyebrow: "בתיאום מראש בלבד",
-    ctaTitle: "השמלה שלך מתחילה בשיחה.",
-    ctaButtonLabel: "לתיאום פגישת ייעוץ",
-  };
+  const homepage = content;
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -56,6 +35,7 @@ export default function Hero({ content }: { content?: HomepageContent }) {
         {/* Hero logo — the main visual element, replacing the text title */}
         <motion.h1
           style={{ y: logoY, opacity: logoOpacity }}
+          aria-label={homepage.heroTitle}
           className="relative mt-2 flex w-[72vw] max-w-[520px] items-center justify-center md:mt-4"
         >
           {/* soft, warm-white glow behind the mark */}
@@ -90,14 +70,9 @@ export default function Hero({ content }: { content?: HomepageContent }) {
                 transition={{ duration: 0.7, ease: editorialEase }}
                 className="group block w-full"
               >
-                <Image
-                  src="/Logo-namal.png"
-                  alt="סטודיו נמל — יחד, תמיד"
-                  width={1267}
-                  height={1267}
-                  priority
-                  className="-my-2 h-auto w-full select-none opacity-90 brightness-0 invert transition-all duration-700 ease-editorial group-hover:opacity-100 group-hover:drop-shadow-[0_0_28px_rgba(253,250,244,0.35)] md:-my-3"
-                />
+                <span className="-my-2 block w-full select-none font-display text-6xl leading-none text-cream opacity-90 transition-all duration-700 ease-editorial group-hover:opacity-100 group-hover:drop-shadow-[0_0_28px_rgba(253,250,244,0.35)] md:-my-3 md:text-8xl">
+                  {homepage.heroTitle}
+                </span>
               </motion.span>
             </motion.span>
           </motion.span>

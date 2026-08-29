@@ -219,11 +219,21 @@ const fallbackNavigation: NavItem[] = [
 
 async function fetchFromSanity<T>(query: string, fallback: T, params: Record<string, unknown> = {}): Promise<T> {
   try {
-    const result = await sanityClient.fetch<T | null>(query, params);
+    const result = await sanityClient.fetch<T | null>(query, params, { cache: 'no-store' });
     return result ?? fallback;
   } catch {
     return fallback;
   }
+}
+
+async function fetchRequiredFromSanity<T>(query: string, params: Record<string, unknown> = {}): Promise<T> {
+  const result = await sanityClient.fetch<T | null>(query, params, { cache: 'no-store' });
+
+  if (result === null) {
+    throw new Error('Required Sanity document was not found');
+  }
+
+  return result;
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -235,7 +245,7 @@ export async function getNavigation(): Promise<NavItem[]> {
 }
 
 export async function getHomepage(): Promise<HomepageContent> {
-  return fetchFromSanity<HomepageContent>(`*[_type == "homepage"][0]{ heroEyebrow, heroTitle, heroSubtitle, heroCtaLabel, heroCtaHref, manifestoEyebrow, manifestoHeadline, manifestoBody, featuredEyebrow, featuredTitle, featuredLinkLabel, featuredGownSlugs, studioEyebrow, studioHeading, studioBody, studioButtonLabel, ctaEyebrow, ctaTitle, ctaButtonLabel }`, fallbackHomepage);
+  return fetchRequiredFromSanity<HomepageContent>(`*[_type == "homepage" && _id == "homepage"][0]{ heroEyebrow, heroTitle, heroSubtitle, heroCtaLabel, heroCtaHref, manifestoEyebrow, manifestoHeadline, manifestoBody, featuredEyebrow, featuredTitle, featuredLinkLabel, featuredGownSlugs, studioEyebrow, studioHeading, studioBody, studioButtonLabel, ctaEyebrow, ctaTitle, ctaButtonLabel }`);
 }
 
 export async function getAbout(): Promise<AboutContent> {
