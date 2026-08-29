@@ -68,12 +68,12 @@ export default function GownModal({
               <h3 className="mt-4 text-4xl leading-[1.05] text-ink md:text-5xl">
                 {gown.name}
               </h3>
-              <p className="mt-6 text-sm leading-relaxed text-muted">
+              <p className="mt-6 text-base leading-relaxed text-muted">
                 {gown.description}
               </p>
               <div className="mt-10 flex gap-10 border-t border-hairline pt-8">
                 <div>
-                  <p className="text-[11px] uppercase tracking-widest2 text-muted">
+                  <p className="text-[13px] uppercase tracking-widest2 text-muted">
                     שנה
                   </p>
                   <p className="mt-2 font-display text-xl text-ink">
@@ -81,7 +81,7 @@ export default function GownModal({
                   </p>
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-widest2 text-muted">
+                  <p className="text-[13px] uppercase tracking-widest2 text-muted">
                     קולקציה
                   </p>
                   <p className="mt-2 font-display text-xl text-ink">

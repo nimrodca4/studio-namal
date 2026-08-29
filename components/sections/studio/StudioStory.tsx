@@ -48,7 +48,7 @@ export default function StudioStory({ content }: { content?: AboutContent }) {
           {about.body?.length ? (
             about.body.map((paragraph, index) => (
               <Reveal key={index} delay={0.1}>
-                <p className="text-sm leading-relaxed text-muted">
+                <p className="text-base leading-relaxed text-muted">
                   {paragraph.children?.map((child) => child.text).join(' ') || ''}
                 </p>
               </Reveal>
@@ -60,7 +60,7 @@ export default function StudioStory({ content }: { content?: AboutContent }) {
               {about.stats.map((stat) => (
                 <div key={stat.label}>
                   <p className="font-display text-4xl text-wine">{stat.value}</p>
-                  <p className="mt-2 text-[11px] uppercase tracking-widest2 text-muted">
+                  <p className="mt-2 text-[13px] uppercase tracking-widest2 text-muted">
                     {stat.label}
                   </p>
                 </div>

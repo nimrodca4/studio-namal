@@ -32,7 +32,7 @@ export default function Timeline({ content }: { content?: AboutContent }) {
               <h3 className="text-3xl leading-tight text-ink md:text-4xl">
                 {step.title}
               </h3>
-              <p className="max-w-lg text-sm leading-relaxed text-muted md:text-base">
+              <p className="max-w-lg text-base leading-relaxed text-muted md:text-lg">
                 {step.text}
               </p>
             </div>

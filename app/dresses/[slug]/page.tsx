@@ -37,7 +37,7 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
       <div className="mb-10 flex items-center justify-between">
         <Link
           href="/our-gowns"
-          className="inline-flex items-center gap-2 text-[11px] uppercase tracking-widest2 text-ink transition-colors hover:text-wine"
+          className="inline-flex items-center gap-2 text-[13px] uppercase tracking-widest2 text-ink transition-colors hover:text-wine"
         >
           <ArrowLeft size={14} strokeWidth={1.25} />
           חזרה לשמלות
@@ -55,15 +55,15 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
         <div className="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16">
           <p className="eyebrow text-wine">{gown.collection}</p>
           <h1 className="mt-4 text-4xl leading-[1.05] text-ink md:text-5xl">{gown.name}</h1>
-          <p className="mt-6 text-sm leading-relaxed text-muted">{gown.description}</p>
+          <p className="mt-6 text-base leading-relaxed text-muted">{gown.description}</p>
 
           <div className="mt-10 flex gap-10 border-t border-hairline pt-8">
             <div>
-              <p className="text-[11px] uppercase tracking-widest2 text-muted">שנה</p>
+              <p className="text-[13px] uppercase tracking-widest2 text-muted">שנה</p>
               <p className="mt-2 font-display text-xl text-ink">{gown.year}</p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-widest2 text-muted">קולקציה</p>
+              <p className="text-[13px] uppercase tracking-widest2 text-muted">קולקציה</p>
               <p className="mt-2 font-display text-xl text-ink">{gown.collection}</p>
             </div>
           </div>

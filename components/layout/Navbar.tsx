@@ -69,7 +69,7 @@ export default function Navbar({
             <Link
               key={link.href}
               href={link.href}
-              className={`text-[11px] uppercase tracking-widest2 transition-colors duration-700 ${
+              className={`text-[13px] uppercase tracking-widest2 transition-colors duration-700 ${
                 light ? "text-ink hover:text-wine" : "text-cream hover:text-cream/70"
               }`}
             >

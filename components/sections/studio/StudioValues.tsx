@@ -36,7 +36,7 @@ export default function StudioValues({ content }: { content?: AboutContent }) {
                   0{i + 1}
                 </span>
                 <h3 className="text-2xl text-ink md:text-3xl">{value.title}</h3>
-                <p className="max-w-xl text-sm leading-relaxed text-muted">
+                <p className="max-w-xl text-base leading-relaxed text-muted">
                   {value.text}
                 </p>
               </div>

@@ -10,7 +10,7 @@ const fieldClass =
   "peer w-full border-b border-hairline bg-transparent py-3 text-ink placeholder-transparent outline-none transition-colors focus:border-wine";
 
 const labelClass =
-  "pointer-events-none absolute start-0 top-3 text-sm text-muted transition-all duration-300 peer-focus:-top-3 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-widest2 peer-focus:text-wine peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest2";
+  "pointer-events-none absolute start-0 top-3 text-base text-muted transition-all duration-300 peer-focus:-top-3 peer-focus:text-[13px] peer-focus:uppercase peer-focus:tracking-widest2 peer-focus:text-wine peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[13px] peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest2";
 
 export default function ContactForm({ content }: { content?: ContactContent }) {
   const contact = content ?? {
@@ -52,7 +52,7 @@ export default function ContactForm({ content }: { content?: ContactContent }) {
         <p className="mt-4 font-display text-3xl text-ink">
           תודה שכתבת לנו.
         </p>
-        <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
+        <p className="mt-4 max-w-sm text-base leading-relaxed text-muted">
           {contact.successText}
         </p>
       </motion.div>
@@ -119,7 +119,7 @@ export default function ContactForm({ content }: { content?: ContactContent }) {
 
         <button
           type="submit"
-          className="group inline-flex items-center gap-3 border border-ink px-8 py-4 text-[11px] uppercase tracking-widest2 text-ink transition-colors duration-700 ease-editorial hover:bg-ink hover:text-cream"
+          className="group inline-flex items-center gap-3 border border-ink px-8 py-4 text-[13px] uppercase tracking-widest2 text-ink transition-colors duration-700 ease-editorial hover:bg-ink hover:text-cream"
         >
           {contact.formButtonLabel}
         </button>

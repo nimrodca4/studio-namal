@@ -52,7 +52,7 @@ export default function Manifesto({ content }: { content?: HomepageContent }) {
           </p>
         </Reveal>
         <Reveal delay={0.2}>
-          <p className="mt-10 max-w-xl text-sm leading-relaxed text-muted">
+          <p className="mt-10 max-w-xl text-2xl leading-relaxed text-muted md:text-3xl">
             {homepage.manifestoBody}
           </p>
         </Reveal>

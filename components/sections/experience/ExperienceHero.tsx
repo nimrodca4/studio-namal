@@ -28,7 +28,7 @@ export default function ExperienceHero({ content }: { content?: AboutContent }) 
         </h1>
       </Reveal>
       <Reveal delay={0.1}>
-        <p className="mt-6 max-w-md text-sm leading-relaxed text-muted">
+        <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
           {about.timelineSteps.length ? `${about.timelineSteps.length} שלבים, שמלה אחת. הנה למה אפשר לצפות — מהיום שבו את נכנסת לראשונה לאטלייה ועד הבוקר שבו את לובשת את השמלה סופית.` : 'ארבעה שלבים, שמלה אחת. הנה למה אפשר לצפות — מהיום שבו את נכנסת לראשונה לאטלייה ועד הבוקר שבו את לובשת את השמלה סופית.'}
         </p>
       </Reveal>

@@ -49,7 +49,7 @@ export default function FeaturedGowns({
           <Reveal delay={0.15}>
             <Link
               href="/our-gowns"
-              className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-widest2 text-ink hover:text-wine"
+              className="group inline-flex items-center gap-2 text-[13px] uppercase tracking-widest2 text-ink hover:text-wine"
             >
               {homepage.featuredLinkLabel}
               <ArrowUpLeft
@@ -73,7 +73,7 @@ export default function FeaturedGowns({
                 </div>
                 <div className="mt-5 flex items-baseline justify-between">
                   <p className="font-display text-2xl text-ink">{gown.name}</p>
-                  <p className="text-[11px] uppercase tracking-widest2 text-muted">
+                  <p className="text-[13px] uppercase tracking-widest2 text-muted">
                     {gown.year}
                   </p>
                 </div>

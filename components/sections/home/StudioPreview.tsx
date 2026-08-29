@@ -47,7 +47,7 @@ export default function StudioPreview({ content }: { content?: HomepageContent }
             </h2>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-8 max-w-md text-sm leading-relaxed text-muted">
+            <p className="mt-8 max-w-md text-base leading-relaxed text-muted">
               {homepage.studioBody}
             </p>
           </Reveal>

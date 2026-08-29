@@ -19,7 +19,7 @@ export default function GownsHeader({ content }: { content?: DressCollection }) 
         </h1>
       </Reveal>
       <Reveal delay={0.1}>
-        <p className="mt-6 max-w-md text-sm leading-relaxed text-muted">
+        <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
           {dresses.intro}
         </p>
       </Reveal>

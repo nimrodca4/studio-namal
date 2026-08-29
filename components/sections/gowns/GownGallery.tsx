@@ -41,7 +41,7 @@ export default function GownGallery({ dresses }: { dresses?: DressCollection }) 
 
                 <div className="absolute inset-x-6 bottom-6 flex translate-y-2 items-end justify-between opacity-0 transition-all duration-700 ease-editorial group-hover:translate-y-0 group-hover:opacity-100">
                   <div>
-                    <p className="text-[11px] uppercase tracking-widest2 text-cream/60">
+                    <p className="text-[13px] uppercase tracking-widest2 text-cream/60">
                       {gown.collection}
                     </p>
                     <p className="mt-1 font-display text-2xl text-cream">

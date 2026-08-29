@@ -46,7 +46,7 @@ export default function ContactDetails({ content }: { content?: ContactContent }
         </h1>
       </Reveal>
       <Reveal delay={0.1}>
-        <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted">
+        <p className="mt-6 max-w-sm text-base leading-relaxed text-muted">
           {contact.intro}
         </p>
       </Reveal>
@@ -64,7 +64,7 @@ export default function ContactDetails({ content }: { content?: ContactContent }
                 <channel.icon size={16} strokeWidth={1.25} />
               </span>
               <span>
-                <span className="block text-[11px] uppercase tracking-widest2 text-muted">
+                <span className="block text-[13px] uppercase tracking-widest2 text-muted">
                   {channel.label}
                 </span>
                 <span className="block font-display text-xl text-ink group-hover:text-wine">
