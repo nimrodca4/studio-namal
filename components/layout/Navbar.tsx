@@ -1,24 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useScrolled } from "@/hooks/useScrolled";
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/the-studio", label: "The Studio" },
-  { href: "/our-gowns", label: "Our Gowns" },
-  { href: "/the-experience", label: "The Experience" },
-  { href: "/contact", label: "Contact" },
+const defaultLinks = [
+  { href: "/", label: "בית" },
+  { href: "/the-studio", label: "הסטודיו" },
+  { href: "/our-gowns", label: "השמלות" },
+  { href: "/the-experience", label: "החוויה" },
+  { href: "/contact", label: "יצירת קשר" },
 ];
 
-export default function Navbar() {
+export default function Navbar({
+  links = defaultLinks,
+}: {
+  links?: { href: string; label: string }[];
+}) {
+  const pathname = usePathname();
   const scrolled = useScrolled(60);
   const [open, setOpen] = useState(false);
 
-  const light = scrolled || open;
+  const navLinks = links.length ? links : defaultLinks;
+  const light = pathname !== "/" || scrolled || open;
 
   return (
     <header
@@ -30,7 +38,7 @@ export default function Navbar() {
         <button
           className="z-50 md:hidden"
           onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
+          aria-label="פתיחת וסגירת התפריט"
         >
           {open ? (
             <X size={20} strokeWidth={1.25} className="text-ink" />
@@ -43,17 +51,21 @@ export default function Navbar() {
           )}
         </button>
 
-        <Link
-          href="/"
-          className={`font-display text-xl tracking-[0.15em] transition-colors duration-700 ${
-            light ? "text-ink" : "text-cream"
-          }`}
-        >
-          STUDIO NAMAL
+        <Link href="/" aria-label="סטודיו נמל — לעמוד הבית" className="shrink-0">
+          <Image
+            src="/Logo-namal_short.png"
+            alt="סטודיו נמל"
+            width={226}
+            height={152}
+            priority
+            className={`h-8 w-auto md:h-10 transition-[filter] duration-700 ease-editorial ${
+              light ? "" : "brightness-0 invert"
+            }`}
+          />
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
-          {links.slice(1).map((link) => (
+          {navLinks.slice(1).map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -79,7 +91,7 @@ export default function Navbar() {
             className="overflow-hidden bg-cream md:hidden"
           >
             <div className="container-studio flex flex-col gap-6 pb-10 pt-4">
-              {links.map((link) => (
+              {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}

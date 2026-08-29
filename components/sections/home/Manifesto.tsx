@@ -1,26 +1,50 @@
+import { Fragment } from "react";
 import Reveal from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeading";
+import type { HomepageContent } from "@/lib/sanity";
 
-export default function Manifesto() {
+export default function Manifesto({ content }: { content?: HomepageContent }) {
+  const homepage = content ?? {
+    heroEyebrow: "סטודיו נמל",
+    heroTitle: "סטודיו נמל",
+    heroSubtitle: "שמלות כלה בעבודת קוטור, מעוצבות ומוגמרות בעבודת יד באטלייה שלנו בתל אביב — עבור נשים שלובשות אותן פעם אחת, וזוכרות אותן לתמיד.",
+    heroCtaLabel: "להכיר את השמלות",
+    heroCtaHref: "/our-gowns",
+    manifestoEyebrow: "התפיסה שלנו",
+    manifestoHeadline: "אנחנו מאמינות ששמלת כלה אינה צריכה להתחרות על תשומת הלב. היא פשוט צריכה להישאר — בחדר, בתצלומים, בזיכרון — הרבה אחרי שהערב תם.",
+    manifestoBody: "כל שמלה של סטודיו נמל מתחילה בשיחה ומסתיימת כמורשת שעוברת מדור לדור. אנחנו עובדות במספרים קטנים, בתיאום מראש, כדי שכל שמלה תקבל את השעות שהיא מבקשת.",
+    featuredEyebrow: "מבחר עבודות",
+    featuredTitle: "השמלות",
+    featuredLinkLabel: "לצפייה בקולקציה המלאה",
+    featuredGownSlugs: ["aria", "celeste", "marlowe"],
+    studioEyebrow: "הסטודיו",
+    studioHeading: "אטלייה של שלושים שמלות בשנה.",
+    studioBody: "אין שתי כלות שיוצאות מהאטלייה שלנו נראות אותו הדבר. סטודיו נמל נוסד מתוך אמונה שקוטור הוא מלאכה של ריסון, ומגביל את עצמו במכוון — פחות שמלות, יותר שעות, תשומת לב קרובה יותר.",
+    studioButtonLabel: "לקריאת הסיפור שלנו",
+    ctaEyebrow: "בתיאום מראש בלבד",
+    ctaTitle: "השמלה שלך מתחילה בשיחה.",
+    ctaButtonLabel: "לתיאום פגישת ייעוץ",
+  };
+
   return (
     <section className="bg-cream py-28 md:py-40">
       <div className="container-studio">
         <Reveal>
-          <Eyebrow>The Philosophy</Eyebrow>
+          <Eyebrow>{homepage.manifestoEyebrow}</Eyebrow>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-4xl font-display text-3xl leading-[1.3] text-ink md:text-5xl md:leading-[1.25]">
-            We believe a wedding gown should not compete for attention. It
-            should simply <em className="text-wine not-italic">stay</em> —
-            in the room, in the photographs, in the memory — long after the
-            evening has ended.
+            {homepage.manifestoHeadline.split("להישאר").map((part, index) => (
+              <Fragment key={`${part}-${index}`}>
+                {index > 0 && <em className="text-wine not-italic">להישאר</em>}
+                {part}
+              </Fragment>
+            ))}
           </p>
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mt-10 max-w-xl text-sm leading-relaxed text-muted">
-            Every Studio Namal gown begins as a conversation and ends as an
-            heirloom. We work in small numbers, by appointment, so that each
-            piece receives the hours it asks for.
+            {homepage.manifestoBody}
           </p>
         </Reveal>
       </div>

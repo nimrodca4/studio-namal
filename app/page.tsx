@@ -3,15 +3,18 @@ import Manifesto from "@/components/sections/home/Manifesto";
 import FeaturedGowns from "@/components/sections/home/FeaturedGowns";
 import StudioPreview from "@/components/sections/home/StudioPreview";
 import CtaBand from "@/components/sections/home/CtaBand";
+import { getDresses, getHomepage } from "@/lib/sanity";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homepage, dresses] = await Promise.all([getHomepage(), getDresses()]);
+
   return (
     <main>
-      <Hero />
-      <Manifesto />
-      <FeaturedGowns />
-      <StudioPreview />
-      <CtaBand />
+      <Hero content={homepage} />
+      <Manifesto content={homepage} />
+      <FeaturedGowns content={homepage} dresses={dresses} />
+      <StudioPreview content={homepage} />
+      <CtaBand content={homepage} />
     </main>
   );
 }

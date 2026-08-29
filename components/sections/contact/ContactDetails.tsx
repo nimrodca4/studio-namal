@@ -2,41 +2,52 @@ import { Instagram, MessageCircle, Mail } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { ButtonPrimary } from "@/components/ui/Button";
+import type { ContactContent } from "@/lib/sanity";
 
-const channels = [
-  {
-    label: "Instagram",
-    value: "@studionamal",
-    href: "https://instagram.com",
-    icon: Instagram,
-  },
-  {
-    label: "WhatsApp",
-    value: "+972 00 000 0000",
-    href: "https://wa.me/972000000000",
-    icon: MessageCircle,
-  },
-  {
-    label: "Email",
-    value: "atelier@studionamal.com",
-    href: "mailto:atelier@studionamal.com",
-    icon: Mail,
-  },
-];
+const icons = {
+  instagram: Instagram,
+  whatsapp: MessageCircle,
+  email: Mail,
+};
 
-export default function ContactDetails() {
+export default function ContactDetails({ content }: { content?: ContactContent }) {
+  const contact = content ?? {
+    eyebrow: "ביקור באטלייה",
+    title: "יצירת קשר",
+    intro: "בתיאום מראש בלבד, מיום ראשון עד חמישי. ספרי לנו על התאריך שלך, ונמצא יחד זמן להיפגש בסלון או בשיחה.",
+    buttonLabel: "לתיאום פגישת ייעוץ",
+    channels: [
+      { label: "אינסטגרם", value: "@studionamal", href: "https://instagram.com" },
+      { label: "וואטסאפ", value: "+972 00 000 0000", href: "https://wa.me/972000000000" },
+      { label: "אימייל", value: "namal@studionamal.com", href: "mailto:namal@studionamal.com" },
+    ],
+    successTitle: "הפנייה התקבלה",
+    successText: "נחזור אלייך מהאטלייה בתוך שני ימי עסקים כדי לתאם את הפגישה.",
+    formButtonLabel: "שליחת הפנייה",
+    fields: {
+      fullName: "שם מלא",
+      email: "כתובת אימייל",
+      weddingDate: "תאריך החתונה (רשות)",
+      message: "ספרי לנו על היום שלך",
+    },
+  };
+
+  const channels = contact.channels.map((channel, index) => ({
+    ...channel,
+    icon: index === 0 ? icons.instagram : index === 1 ? icons.whatsapp : icons.email,
+  }));
+
   return (
     <div>
       <Reveal>
-        <Eyebrow>Visit the Atelier</Eyebrow>
+        <Eyebrow>{contact.eyebrow}</Eyebrow>
         <h1 className="mt-4 text-4xl leading-[1.05] text-ink md:text-6xl">
-          Contact
+          {contact.title}
         </h1>
       </Reveal>
       <Reveal delay={0.1}>
         <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted">
-          By appointment only, Sunday through Thursday. Tell us about your
-          date and we'll find a time to meet in the salon or over a call.
+          {contact.intro}
         </p>
       </Reveal>
 
@@ -66,8 +77,8 @@ export default function ContactDetails() {
       </div>
 
       <Reveal delay={0.35} className="mt-14">
-        <ButtonPrimary href="https://wa.me/972000000000">
-          Book a Consultation
+        <ButtonPrimary href={contact.channels[1]?.href || "https://wa.me/972000000000"}>
+          {contact.buttonLabel}
         </ButtonPrimary>
       </Reveal>
     </div>

@@ -7,6 +7,7 @@ import GownSketch from "@/components/ui/GownSketch";
 import GownModal from "@/components/sections/gowns/GownModal";
 import Reveal from "@/components/ui/Reveal";
 import { gowns, Gown } from "@/lib/gowns";
+import type { DressCollection } from "@/lib/sanity";
 
 const aspect: Record<Gown["size"], string> = {
   tall: "aspect-[3/4.4]",
@@ -14,13 +15,14 @@ const aspect: Record<Gown["size"], string> = {
   square: "aspect-[1/1]",
 };
 
-export default function GownGallery() {
+export default function GownGallery({ dresses }: { dresses?: DressCollection }) {
+  const items = dresses?.items ?? gowns;
   const [active, setActive] = useState<Gown | null>(null);
 
   return (
     <>
       <div className="columns-1 gap-8 sm:columns-2 lg:columns-3">
-        {gowns.map((gown, i) => (
+        {items.map((gown, i) => (
           <Reveal
             key={gown.slug}
             delay={(i % 3) * 0.08}
@@ -28,7 +30,7 @@ export default function GownGallery() {
           >
             <button
               onClick={() => setActive(gown)}
-              className="group relative block w-full overflow-hidden bg-ink text-left"
+              className="group relative block w-full overflow-hidden bg-ink text-start"
             >
               <div className={`relative w-full ${aspect[gown.size]}`}>
                 <GownSketch

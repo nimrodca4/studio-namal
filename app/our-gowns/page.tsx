@@ -2,21 +2,26 @@ import type { Metadata } from "next";
 import GownsHeader from "@/components/sections/gowns/GownsHeader";
 import GownGallery from "@/components/sections/gowns/GownGallery";
 import CtaBand from "@/components/sections/home/CtaBand";
+import { getDresses, getHomepage } from "@/lib/sanity";
 
-export const metadata: Metadata = {
-  title: "Our Gowns",
-  description:
-    "Browse the Studio Namal archive of couture bridal gowns, from The Quiet Hour to First Light.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const dresses = await getDresses();
+  return {
+    title: "השמלות שלנו",
+    description: dresses.intro,
+  };
+}
 
-export default function OurGownsPage() {
+export default async function OurGownsPage() {
+  const [dresses, homepage] = await Promise.all([getDresses(), getHomepage()]);
+
   return (
     <main>
-      <GownsHeader />
+      <GownsHeader content={dresses} />
       <section className="container-studio pb-28 md:pb-40">
-        <GownGallery />
+        <GownGallery dresses={dresses} />
       </section>
-      <CtaBand />
+      <CtaBand content={homepage} />
     </main>
   );
 }

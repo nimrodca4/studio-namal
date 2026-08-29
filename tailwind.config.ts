@@ -16,11 +16,11 @@ const config: Config = {
         hairline: "#EAEAEA",
       },
       fontFamily: {
-        display: ["var(--font-cormorant)", "serif"],
-        body: ["var(--font-manrope)", "sans-serif"],
+        display: ["var(--font-display)", "Frank Ruhl Libre", "David Libre", "serif"],
+        body: ["var(--font-body)", "Assistant", "Arial", "sans-serif"],
       },
       letterSpacing: {
-        widest2: "0.35em",
+        widest2: "0.14em",
       },
       transitionTimingFunction: {
         editorial: "cubic-bezier(0.16, 1, 0.3, 1)",

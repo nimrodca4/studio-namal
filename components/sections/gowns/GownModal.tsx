@@ -36,7 +36,7 @@ export default function GownModal({
           transition={{ duration: 0.5, ease: editorialEase }}
         >
           <button
-            aria-label="Close"
+            aria-label="סגירה"
             onClick={onClose}
             className="absolute inset-0 bg-ink/80 backdrop-blur-sm"
           />
@@ -50,8 +50,8 @@ export default function GownModal({
           >
             <button
               onClick={onClose}
-              aria-label="Close gown detail"
-              className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center border border-ink/20 bg-cream/80 text-ink transition-colors hover:bg-ink hover:text-cream md:right-8 md:top-8"
+              aria-label="סגירת פרטי השמלה"
+              className="absolute left-5 top-5 z-10 flex h-10 w-10 items-center justify-center border border-ink/20 bg-cream/80 text-ink transition-colors hover:bg-ink hover:text-cream md:left-8 md:top-8"
             >
               <X size={16} strokeWidth={1.25} />
             </button>
@@ -74,7 +74,7 @@ export default function GownModal({
               <div className="mt-10 flex gap-10 border-t border-hairline pt-8">
                 <div>
                   <p className="text-[11px] uppercase tracking-widest2 text-muted">
-                    Year
+                    שנה
                   </p>
                   <p className="mt-2 font-display text-xl text-ink">
                     {gown.year}
@@ -82,7 +82,7 @@ export default function GownModal({
                 </div>
                 <div>
                   <p className="text-[11px] uppercase tracking-widest2 text-muted">
-                    Collection
+                    קולקציה
                   </p>
                   <p className="mt-2 font-display text-xl text-ink">
                     {gown.collection}

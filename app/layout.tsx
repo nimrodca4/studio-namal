@@ -1,69 +1,70 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Frank_Ruhl_Libre, Assistant } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { getNavigation, getSiteSettings } from "@/lib/sanity";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-cormorant",
+const frankRuhl = Frank_Ruhl_Libre({
+  subsets: ["hebrew", "latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const manrope = Manrope({
-  subsets: ["latin"],
+const assistant = Assistant({
+  subsets: ["hebrew", "latin"],
   weight: ["300", "400", "500", "600"],
-  variable: "--font-manrope",
+  variable: "--font-body",
   display: "swap",
 });
 
-const siteUrl = "https://studionamal.com";
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteSettings();
+  const siteUrl = site.siteUrl || "https://studionamal.com";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "Studio Namal — Always Together",
-    template: "%s — Studio Namal",
-  },
-  description:
-    "Studio Namal is a couture bridal atelier crafting gowns of quiet, enduring elegance. Always Together.",
-  keywords: [
-    "Studio Namal",
-    "bridal couture",
-    "luxury wedding gowns",
-    "couture atelier",
-    "bespoke bridal design",
-  ],
-  authors: [{ name: "Studio Namal" }],
-  openGraph: {
-    title: "Studio Namal — Always Together",
-    description:
-      "A couture bridal atelier crafting gowns of quiet, enduring elegance.",
-    url: siteUrl,
-    siteName: "Studio Namal",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Studio Namal — Always Together",
-    description:
-      "A couture bridal atelier crafting gowns of quiet, enduring elegance.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: `${site.siteName} — ${site.tagline}`,
+      template: `%s — ${site.siteName}`,
+    },
+    description: site.description,
+    keywords: site.keywords,
+    authors: [{ name: site.siteName }],
+    openGraph: {
+      title: `${site.siteName} — ${site.tagline}`,
+      description: site.description,
+      url: siteUrl,
+      siteName: site.siteName,
+      type: "website",
+      locale: "he_IL",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${site.siteName} — ${site.tagline}`,
+      description: site.description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const nav = await getNavigation();
+
   return (
-    <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
+    <html
+      lang="he"
+      dir="rtl"
+      className={`${frankRuhl.variable} ${assistant.variable}`}
+    >
       <body>
-        <Navbar />
+        <Navbar links={nav} />
         {children}
         <Footer />
       </body>

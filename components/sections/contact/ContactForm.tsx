@@ -4,14 +4,35 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import { editorialEase } from "@/animations/variants";
+import type { ContactContent } from "@/lib/sanity";
 
 const fieldClass =
   "peer w-full border-b border-hairline bg-transparent py-3 text-ink placeholder-transparent outline-none transition-colors focus:border-wine";
 
 const labelClass =
-  "pointer-events-none absolute left-0 top-3 text-sm text-muted transition-all duration-300 peer-focus:-top-3 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-widest2 peer-focus:text-wine peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest2";
+  "pointer-events-none absolute start-0 top-3 text-sm text-muted transition-all duration-300 peer-focus:-top-3 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-widest2 peer-focus:text-wine peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest2";
 
-export default function ContactForm() {
+export default function ContactForm({ content }: { content?: ContactContent }) {
+  const contact = content ?? {
+    eyebrow: "ביקור באטלייה",
+    title: "יצירת קשר",
+    intro: "בתיאום מראש בלבד, מיום ראשון עד חמישי. ספרי לנו על התאריך שלך, ונמצא יחד זמן להיפגש בסלון או בשיחה.",
+    buttonLabel: "לתיאום פגישת ייעוץ",
+    channels: [
+      { label: "אינסטגרם", value: "@studionamal", href: "https://instagram.com" },
+      { label: "וואטסאפ", value: "+972 00 000 0000", href: "https://wa.me/972000000000" },
+      { label: "אימייל", value: "namal@studionamal.com", href: "mailto:namal@studionamal.com" },
+    ],
+    successTitle: "הפנייה התקבלה",
+    successText: "נחזור אלייך מהאטלייה בתוך שני ימי עסקים כדי לתאם את הפגישה.",
+    formButtonLabel: "שליחת הפנייה",
+    fields: {
+      fullName: "שם מלא",
+      email: "כתובת אימייל",
+      weddingDate: "תאריך החתונה (רשות)",
+      message: "ספרי לנו על היום שלך",
+    },
+  };
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,13 +48,12 @@ export default function ContactForm() {
         transition={{ duration: 0.8, ease: editorialEase }}
         className="flex h-full min-h-[420px] flex-col justify-center border border-hairline p-10"
       >
-        <p className="eyebrow text-wine">Message Received</p>
+        <p className="eyebrow text-wine">{contact.successTitle}</p>
         <p className="mt-4 font-display text-3xl text-ink">
-          Thank you for writing to us.
+          תודה שכתבת לנו.
         </p>
         <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-          A member of the atelier will reply within two business days to
-          arrange your appointment.
+          {contact.successText}
         </p>
       </motion.div>
     );
@@ -48,11 +68,11 @@ export default function ContactForm() {
             name="name"
             type="text"
             required
-            placeholder="Full Name"
+            placeholder="שם מלא"
             className={fieldClass}
           />
           <label htmlFor="name" className={labelClass}>
-            Full Name
+            {contact.fields.fullName}
           </label>
         </div>
 
@@ -62,11 +82,11 @@ export default function ContactForm() {
             name="email"
             type="email"
             required
-            placeholder="Email Address"
+            placeholder="כתובת אימייל"
             className={fieldClass}
           />
           <label htmlFor="email" className={labelClass}>
-            Email Address
+            {contact.fields.email}
           </label>
         </div>
 
@@ -75,11 +95,11 @@ export default function ContactForm() {
             id="date"
             name="date"
             type="text"
-            placeholder="Wedding Date"
+            placeholder="תאריך החתונה"
             className={fieldClass}
           />
           <label htmlFor="date" className={labelClass}>
-            Wedding Date (optional)
+            {contact.fields.weddingDate}
           </label>
         </div>
 
@@ -89,11 +109,11 @@ export default function ContactForm() {
             name="message"
             required
             rows={4}
-            placeholder="Tell Us About Your Day"
+            placeholder="ספרי לנו על היום שלך"
             className={`${fieldClass} resize-none`}
           />
           <label htmlFor="message" className={labelClass}>
-            Tell Us About Your Day
+            {contact.fields.message}
           </label>
         </div>
 
@@ -101,7 +121,7 @@ export default function ContactForm() {
           type="submit"
           className="group inline-flex items-center gap-3 border border-ink px-8 py-4 text-[11px] uppercase tracking-widest2 text-ink transition-colors duration-700 ease-editorial hover:bg-ink hover:text-cream"
         >
-          Send Message
+          {contact.formButtonLabel}
         </button>
       </form>
     </Reveal>

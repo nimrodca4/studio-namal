@@ -2,8 +2,23 @@ import Reveal from "@/components/ui/Reveal";
 import { imageReveal } from "@/animations/variants";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import GownSketch from "@/components/ui/GownSketch";
+import type { AboutContent } from "@/lib/sanity";
 
-export default function StudioStory() {
+export default function StudioStory({ content }: { content?: AboutContent }) {
+  const about = content ?? {
+    eyebrow: "נוסד ב־2015 — תל אביב",
+    title: "בית שנבנה סביב רעיון אחד.",
+    intro: "סטודיו נמל נוסד מתוך אמונה אחת: ששמלת כלה ראויה לאותה קפדנות כמו כל בגד שעולה למסלול, ולאותה אינטימיות של דבר שנלבש פעם אחת בלבד, על ידי מישהי שאנחנו מכירים היטב.",
+    body: [],
+    stats: [
+      { value: "2015", label: "שנת הקמה" },
+      { value: "30", label: "שמלות בשנה" },
+      { value: "+210", label: "שעות עבודה בשמלה" },
+    ],
+    valuesEyebrow: "איך אנחנו עובדות",
+    values: [],
+    timelineSteps: [],
+  };
   return (
     <section className="bg-cream py-28 md:py-36">
       <div className="container-studio grid gap-16 md:grid-cols-2 md:gap-24">
@@ -18,65 +33,38 @@ export default function StudioStory() {
 
         <div className="space-y-14">
           <Reveal>
-            <Eyebrow>Founded 2015 — Tel Aviv</Eyebrow>
+            <Eyebrow>{about.eyebrow}</Eyebrow>
             <h1 className="mt-4 text-4xl leading-[1.1] text-ink md:text-6xl">
-              A house built
-              <br />
-              around one idea.
+              {about.title}
             </h1>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="text-lg leading-relaxed text-muted md:text-xl">
-              Studio Namal was founded on a single conviction: that a
-              wedding gown deserves the same rigor as any garment shown on a
-              runway, and the same intimacy as something worn only once,
-              by someone we know well.
+              {about.intro}
             </p>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <p className="text-sm leading-relaxed text-muted">
-              What began as a single cutting table in a converted print
-              workshop near the port has grown, slowly and by design, into
-              a full atelier — pattern room, embroidery table, fitting
-              salon — without ever losing the proportions of a small studio.
-              We still take every first meeting ourselves. We still hand-cut
-              every muslin.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="text-sm leading-relaxed text-muted">
-              Our name comes from the Hebrew word for harbor — a place
-              vessels return to. It is also, we like to think, what a
-              wedding gown becomes: something a woman returns to, in
-              memory, long after the day itself has passed. Always
-              together, as our tagline promises — not just the couple,
-              but the woman and the gown she chose to be married in.
-            </p>
-          </Reveal>
+          {about.body?.length ? (
+            about.body.map((paragraph, index) => (
+              <Reveal key={index} delay={0.1}>
+                <p className="text-sm leading-relaxed text-muted">
+                  {paragraph.children?.map((child) => child.text).join(' ') || ''}
+                </p>
+              </Reveal>
+            ))
+          ) : null}
 
           <Reveal delay={0.1} className="hairline pt-10">
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-              <div>
-                <p className="font-display text-4xl text-wine">2015</p>
-                <p className="mt-2 text-[11px] uppercase tracking-widest2 text-muted">
-                  Founded
-                </p>
-              </div>
-              <div>
-                <p className="font-display text-4xl text-wine">30</p>
-                <p className="mt-2 text-[11px] uppercase tracking-widest2 text-muted">
-                  Gowns / Year
-                </p>
-              </div>
-              <div>
-                <p className="font-display text-4xl text-wine">210+</p>
-                <p className="mt-2 text-[11px] uppercase tracking-widest2 text-muted">
-                  Hours / Gown
-                </p>
-              </div>
+              {about.stats.map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-display text-4xl text-wine">{stat.value}</p>
+                  <p className="mt-2 text-[11px] uppercase tracking-widest2 text-muted">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
