@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
-import { editorialEase } from "@/animations/variants";
 import type { ContactContent } from "@/lib/sanity";
 
 const fieldClass =
@@ -33,63 +30,16 @@ export default function ContactForm({ content }: { content?: ContactContent }) {
       message: "ספרי לנו על היום שלך",
     },
   };
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    const formData = new FormData(form);
-    const subject = `פנייה חדשה מ-${formData.get("name") || "לקוחה"}`;
-    const body = [
-      `שם מלא: ${formData.get("name") || ""}`,
-      `אימייל: ${formData.get("email") || ""}`,
-      `תאריך החתונה: ${formData.get("date") || "לא צוין"}`,
-      "",
-      "הודעה:",
-      `${formData.get("message") || ""}`,
-    ].join("\n");
-
-    fetch("https://formsubmit.co/ajax/nimrodca4@gmail.com", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        _subject: subject,
-        _template: "table",
-        _replyto: formData.get("email") || "",
-        message: body,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Contact submission failed");
-        setSubmitted(true);
-      })
-      .catch(() => {
-        window.location.href = `mailto:nimrodca4@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      });
-  };
-
-  if (submitted) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: editorialEase }}
-        className="flex h-full min-h-[420px] flex-col justify-center border border-hairline p-10"
-      >
-        <p className="eyebrow text-wine">{contact.successTitle}</p>
-        <p className="mt-4 font-display text-3xl text-ink">
-          תודה שכתבת לנו.
-        </p>
-        <p className="mt-4 max-w-sm text-base leading-relaxed text-muted">
-          {contact.successText}
-        </p>
-      </motion.div>
-    );
-  }
-
   return (
     <Reveal delay={0.1}>
-      <form onSubmit={handleSubmit} className="space-y-10">
+      <form
+        action="https://formsubmit.co/nimrodca4@gmail.com"
+        method="POST"
+        className="space-y-10"
+      >
+        <input type="hidden" name="_subject" value="פנייה חדשה מסטודיו נמל" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
         <div className="relative">
           <input
             id="name"
