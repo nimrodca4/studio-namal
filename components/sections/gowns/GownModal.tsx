@@ -39,7 +39,7 @@ export default function GownModal({
     <AnimatePresence>
       {gown && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-10"
+          className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto overscroll-contain p-4 md:items-center md:p-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export default function GownModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.6, ease: editorialEase }}
-            className="relative grid w-full max-w-5xl grid-cols-1 overflow-hidden bg-cream md:grid-cols-2"
+            className="relative my-auto grid w-full max-w-5xl grid-cols-1 overflow-hidden bg-cream md:grid-cols-2"
           >
             <button
               onClick={onClose}
