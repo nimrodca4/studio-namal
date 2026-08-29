@@ -28,7 +28,7 @@ export default function Hero({ content }: { content: HomepageContent }) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: editorialEase, delay: 0.2 }}
-          className="font-display text-2xl tracking-[0.2em] text-cream/90"
+          className="font-body text-2xl tracking-[0.2em] text-cream/90"
         >
           {homepage.heroEyebrow}
         </motion.p>
