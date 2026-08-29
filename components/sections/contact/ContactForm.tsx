@@ -37,7 +37,8 @@ export default function ContactForm({ content }: { content?: ContactContent }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const form = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
     const subject = `פנייה חדשה מ-${formData.get("name") || "לקוחה"}`;
     const body = [
       `שם מלא: ${formData.get("name") || ""}`,
@@ -48,8 +49,23 @@ export default function ContactForm({ content }: { content?: ContactContent }) {
       `${formData.get("message") || ""}`,
     ].join("\n");
 
-    window.location.href = `mailto:nimrodca4@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
+    fetch("https://formsubmit.co/ajax/nimrodca4@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: subject,
+        _template: "table",
+        _replyto: formData.get("email") || "",
+        message: body,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Contact submission failed");
+        setSubmitted(true);
+      })
+      .catch(() => {
+        window.location.href = `mailto:nimrodca4@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
   };
 
   if (submitted) {
