@@ -39,7 +39,7 @@ export default function CtaBand({ content }: { content?: HomepageContent }) {
         <Reveal delay={0.2} className="mt-12">
           <ButtonPrimary
             href="/contact"
-            className="border-cream/80 text-cream hover:bg-cream hover:text-ink"
+            className="border-cream/80 bg-cream px-10 py-5 text-base text-ink hover:bg-transparent hover:text-cream"
           >
             {homepage.ctaButtonLabel}
           </ButtonPrimary>
