@@ -2,14 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { getDressBySlug, getDresses } from '@/lib/sanity';
+import { getDressBySlug } from '@/lib/sanity';
 import { getSanityImageUrl } from '@/lib/sanityImage';
 import DressGallery from '@/components/sections/gowns/DressGallery';
 
-export async function generateStaticParams() {
-  const archive = await getDresses();
-  return archive.items.map((gown) => ({ slug: gown.slug }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
