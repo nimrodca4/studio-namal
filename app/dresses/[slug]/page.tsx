@@ -30,7 +30,8 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
     notFound();
   }
 
-  const imageUrls = [gown.coverImage, ...(gown.galleryImages || [])]
+  const coverImageUrl = getSanityImageUrl(gown.coverImage);
+  const galleryImageUrls = (gown.galleryImages || [])
     .map((image) => getSanityImageUrl(image))
     .filter((url): url is string => Boolean(url));
 
@@ -47,7 +48,11 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
       </div>
 
       <article className="grid gap-8 overflow-hidden bg-cream md:grid-cols-2">
-        <DressGallery name={gown.name} imageUrls={imageUrls} />
+        <DressGallery
+          name={gown.name}
+          coverImageUrl={coverImageUrl}
+          galleryImageUrls={galleryImageUrls}
+        />
 
         <div className="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16">
           <p className="eyebrow text-wine">{gown.collection}</p>
