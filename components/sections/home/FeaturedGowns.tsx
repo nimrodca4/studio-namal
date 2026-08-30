@@ -35,7 +35,7 @@ export default function FeaturedGowns({
     ctaButtonLabel: "לתיאום פגישת ייעוץ",
   };
   const items = dresses?.items ?? [];
-  const featured = items.filter((gown) => homepage.featuredGownSlugs.includes(gown.slug)).slice(0, 3);
+  const featured = items;
 
   return (
     <section className="bg-paper py-28 md:py-40">
@@ -65,7 +65,7 @@ export default function FeaturedGowns({
         <div className="mt-16 grid gap-8 md:grid-cols-3">
           {featured.map((gown, i) => (
             <Reveal key={gown.slug} delay={i * 0.1}>
-              <Link href="/our-gowns" className="group block">
+              <Link href={`/dresses/${encodeURIComponent(gown.slug)}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-cream">
                   {getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) && (
                     <Image src={getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-105" />
