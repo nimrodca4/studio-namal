@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { getDressBySlug, getDresses } from '@/lib/sanity';
 import { getSanityImageUrl } from '@/lib/sanityImage';
+import DressGallery from '@/components/sections/gowns/DressGallery';
 
 export async function generateStaticParams() {
   const archive = await getDresses();
@@ -33,6 +33,10 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
     notFound();
   }
 
+  const imageUrls = [gown.coverImage, ...(gown.galleryImages || [])]
+    .map((image) => getSanityImageUrl(image))
+    .filter((url): url is string => Boolean(url));
+
   return (
     <main className="container-studio py-20 md:py-28">
       <div className="mb-10 flex items-center justify-between">
@@ -46,16 +50,7 @@ export default async function DressPage({ params }: { params: Promise<{ slug: st
       </div>
 
       <article className="grid gap-8 overflow-hidden bg-cream md:grid-cols-2">
-        <div className="relative aspect-[3/4] bg-ink md:aspect-auto">
-          {getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) ? (
-            <Image
-              src={getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) as string}
-              alt={gown.name}
-              fill
-              className="object-cover"
-            />
-          ) : null}
-        </div>
+        <DressGallery name={gown.name} imageUrls={imageUrls} />
 
         <div className="flex flex-col justify-center px-6 py-10 md:px-12 md:py-16">
           <p className="eyebrow text-wine">{gown.collection}</p>
