@@ -5,6 +5,7 @@ import { Eyebrow } from "@/components/ui/SectionHeading";
 import Image from "next/image";
 import { getSanityImageUrl } from "@/lib/sanityImage";
 import type { DressCollection, HomepageContent } from "@/lib/sanity";
+import { getDressPath } from "@/lib/gowns";
 
 export default function FeaturedGowns({
   content,
@@ -65,7 +66,7 @@ export default function FeaturedGowns({
         <div className="mt-16 grid gap-8 md:grid-cols-3">
           {featured.map((gown, i) => (
             <Reveal key={gown.slug} delay={i * 0.1}>
-              <Link href={`/dresses/${encodeURIComponent(gown.slug)}`} className="group block">
+              <Link href={getDressPath(gown.slug)} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-cream">
                   {getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) && (
                     <Image src={getSanityImageUrl(gown.coverImage || gown.galleryImages?.[0]) as string} alt={gown.name} fill className="object-cover transition-transform duration-[1200ms] ease-editorial group-hover:scale-105" />

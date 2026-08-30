@@ -17,6 +17,10 @@ export type Gown = {
   galleryImages?: SanityImage[];
 };
 
+export function getDressPath(slug: string) {
+  return `/dresses/${encodeURIComponent(slug)}`;
+}
+
 export const gowns: Gown[] = [
   {
     slug: "aria",

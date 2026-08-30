@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import GownModal from "@/components/sections/gowns/GownModal";
 import Reveal from "@/components/ui/Reveal";
-import { gowns, Gown } from "@/lib/gowns";
+import { getDressPath, gowns, Gown } from "@/lib/gowns";
 import type { DressCollection } from "@/lib/sanity";
 import Image from "next/image";
 import { getSanityImageUrl } from "@/lib/sanityImage";
@@ -18,7 +17,6 @@ const aspect: Record<Gown["size"], string> = {
 
 export default function GownGallery({ dresses }: { dresses?: DressCollection }) {
   const items = dresses?.items ?? gowns;
-  const [active, setActive] = useState<Gown | null>(null);
 
   return (
     <>
@@ -29,8 +27,8 @@ export default function GownGallery({ dresses }: { dresses?: DressCollection }) 
             delay={(i % 3) * 0.08}
             className="mb-8 break-inside-avoid"
           >
-            <button
-              onClick={() => setActive(gown)}
+            <Link
+              href={getDressPath(gown.slug)}
               className="group relative block w-full overflow-hidden bg-ink text-start"
             >
               <div className={`relative w-full ${aspect[gown.size]}`}>
@@ -53,12 +51,10 @@ export default function GownGallery({ dresses }: { dresses?: DressCollection }) 
                   </span>
                 </div>
               </div>
-            </button>
+            </Link>
           </Reveal>
         ))}
       </div>
-
-      <GownModal gown={active} onClose={() => setActive(null)} />
     </>
   );
 }

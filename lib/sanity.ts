@@ -272,16 +272,17 @@ export async function getDresses(): Promise<DressCollection> {
 }
 
 export async function getDressBySlug(slug: string): Promise<Gown | null> {
+  const normalizedSlug = decodeURIComponent(slug);
   const dress = await fetchFromSanity<SanityDress | null>(
     `*[_type == "dress" && slug.current == $slug][0]{ slug, name, description, year, collection, sketch, size, coverImage{..., asset}, galleryImages[]{..., asset} }`,
     null,
-    { slug }
+    { slug: normalizedSlug }
   );
 
   if (!dress) return null;
 
   console.log('[Sanity dress]', {
-    slug,
+    slug: normalizedSlug,
     coverImage: getSanityImageUrl(dress.coverImage || dress.galleryImages?.[0]),
     galleryImages: dress.galleryImages?.map((image) => getSanityImageUrl(image)) || [],
   });
